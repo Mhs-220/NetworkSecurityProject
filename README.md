@@ -1,2 +1,12 @@
 # NetworkSecurityProject
-Who knows? maybe someday we put a good description here :D
+
+## Getting Start for Shali
+
+it is so simple! just clone project, install (pipenv)[https://github.com/pypa/pipenv] and then run
+`pipenv install` after that, if you want to install another packege(i've already install flask)
+please tell me befor that, if i'm not on-call, simply use `pipenv install PACKAGE`. don't forget to use
+`pipenv uninstall PACKAGE` for package that we don't want them anymore.
+
+i try to work on it on this weekend. have fun
+
+MhS
