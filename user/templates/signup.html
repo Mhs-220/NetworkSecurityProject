@@ -1,0 +1,36 @@
+<link rel="stylesheet" href="/static/style.css" type="text/css">
+
+{% block body %}
+{% if session['logged_in'] %}
+    <div class="login">
+        <div class="login-screen app-title">
+            <h3>You're logged in already!</h3>
+        </div>
+    </div>
+{% else %}
+    <form action="/user/signup" method="POST">
+        <div class="login">
+            <div class="login-screen">
+                <div class="app-title">
+                    <h1>Sign Up</h1>
+                </div>
+                {% if message %}
+                    <div class="message">
+                        <span class="closebtn">&times;</span>
+                        {{ message }}
+                    </div>
+                {% endif %}
+                <div class="login-form">
+                    {% for field in fields %}
+                        <div class="control-group">
+                            <input type="{{ field.type }}" class="login-field" value="" placeholder="{{ field.name }}" name="{{ field.name }}" required>
+                            <label class="login-field-icon fui-user" for="login-name"></label>
+                        </div>
+                    {% endfor %}
+                    <input type="submit" value="Sign Up" class="btn btn-primary btn-large btn-block">
+                </div>
+            </div>
+        </div>
+    </form>
+{% endif %}
+{% endblock %}

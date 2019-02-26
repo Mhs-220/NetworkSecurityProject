@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="/static/style.css" type="text/css">
+
+{% block body %}
+{% if username %}
+    <div class="login">
+        <div class="login-screen app-title">
+            <h3>You should login first!</h3>
+        </div>
+    </div>
+{% else %}
+    <div class="login">
+        <div class="login-screen">
+            <div class="app-title">
+                <h1>Login</h1>
+            </div>
+            {% if message %}
+                <div class="message">
+                    <span class="closebtn">&times;</span>
+                    {{ message }}
+                </div>
+            {% endif %}
+            <div class="login-form">
+                {% for field in fields %}
+                    <div class="control-group">
+                        <input type="{{ field.type }}" class="login-field" value="" placeholder="{{ field.name }}" name="{{ field.name }}" required>
+                        <label class="login-field-icon fui-user" for="login-name"></label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
