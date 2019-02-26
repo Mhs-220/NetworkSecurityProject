@@ -10,3 +10,12 @@ please tell me befor that, if i'm not on-call, simply use `pipenv install PACKAG
 i try to work on it on this weekend. have fun
 
 MhS
+
+## TODO
+
+- [x] front-end for user app
+- [x] back-end for user app
+- [ ] connect to database
+- [ ] prevent from sql injection
+- [ ] front-end for post app
+- [ ] back-end for post app
