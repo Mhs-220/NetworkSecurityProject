@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="/static/style.css" type="text/css">
+
+{% block body %}
+{% if not session['logged_in'] %}
+    <div class="login">
+        <div class="login-screen app-title">
+            <h3>You should login first!</h3>
+        </div>
+    </div>
+{% else %}
+    <form action="/post/compose" method="POST">
+        <div class="login">
+            <div class="login-screen">
+                <div class="app-title">
+                    <h1>Compose</h1>
+                </div>
+                {% if message %}
+                    <div class="message">
+                        <span class="closebtn">&times;</span>
+                        {{ message }}
+                    </div>
+                {% endif %}
+                <div class="login-form">
+                    <div class="control-group">
+                        <textarea class="login-field" value="" placeholder="{{ fields[0].placeholder }}" name="{{ fields[0].name }}" required></textarea>
+                        <label class="login-field-icon fui-user" for="login-name"></label>
+                    </div>
+                    <input type="submit" value="Compose" class="btn btn-primary btn-large btn-block">
+                </div>
+            </div>
+        </div>
+    </form>
+{% endif %}
+{% endblock %}
+<script>
+        // Get all elements with class="closebtn"
+        var close = document.getElementsByClassName("closebtn");
+        var i;
+        
+        // Loop through all close buttons
+        for (i = 0; i < close.length; i++) {
+          // When someone clicks on a close button
+          close[i].onclick = function(){
+        
+            // Get the parent of <span class="closebtn"> (<div class="alert">)
+            var div = this.parentElement;
+        
+            // Set the opacity of div to 0 (transparent)
+            div.style.opacity = "0";
+        
+            // Hide the div after 600ms (the same amount of milliseconds it takes to fade out)
+            setTimeout(function(){ div.style.display = "none"; }, 600);
+          }
+        }
+</script>

@@ -13,6 +13,14 @@ user = Blueprint(
 def signup(message = None):
     fields = [
         {
+            'name': 'firstname',
+            'type': 'text'
+        },
+        {
+            'name': 'lastname',
+            'type': 'text'
+        },
+        {
             'name': 'username',
             'type': 'text'
         },
@@ -61,7 +69,7 @@ def signin(message = None):
             ):
             session['logged_in'] = True
             session['username'] = request.form['username']
-            # return redirect(url_for('timeline'), code = 200)
+            return redirect(url_for('post.timeline'), code = 301)
         else:
             message = "Invalid username or password"
     return render_template(
@@ -83,5 +91,5 @@ def profile():
         fields = get_user_profile(username)
     return render_template(
         'profile.html',
-        username = username
+        fields = fields
     )

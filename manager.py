@@ -14,5 +14,7 @@ def ping():
     return "pong"
 
 from user.controllers import user as user_app  # noqa: E402
+from post.controllers import post as post_app  # noqa: E402
 
 app.register_blueprint(user_app)
+app.register_blueprint(post_app)

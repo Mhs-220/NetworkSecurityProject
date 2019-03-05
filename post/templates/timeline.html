@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="/static/style.css" type="text/css">
+
+{% block body %}
+{% if not session['logged_in'] %}
+    <div class="login">
+        <div class="login-screen app-title">
+            <h3>You should login first!</h3>
+        </div>
+    </div>
+{% else %}
+    <div class="chat">
+        {% for post in posts %}
+            {% if post.username == session['username'] %}
+                <div class="my-post app-title">
+                    <h4>{{post.username}}</h4>
+                    <hr>
+                    <h4>{{post.content}}</h4>
+                </div>
+            {% else %}
+                <div class="others-post app-title">
+                    <h4>{{post.username}}</h4>
+                    <hr>
+                    <h4>{{post.content}}</h4>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}

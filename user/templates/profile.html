@@ -1,32 +1,19 @@
 <link rel="stylesheet" href="/static/style.css" type="text/css">
 
 {% block body %}
-{% if username %}
+{% if not session['logged_in'] %}
     <div class="login">
         <div class="login-screen app-title">
-            <h3>You should login first!</h3>
+            <h3>You should login to see your profile dude!</h3>
         </div>
     </div>
 {% else %}
     <div class="login">
-        <div class="login-screen">
-            <div class="app-title">
-                <h1>Login</h1>
-            </div>
-            {% if message %}
-                <div class="message">
-                    <span class="closebtn">&times;</span>
-                    {{ message }}
-                </div>
-            {% endif %}
-            <div class="login-form">
-                {% for field in fields %}
-                    <div class="control-group">
-                        <input type="{{ field.type }}" class="login-field" value="" placeholder="{{ field.name }}" name="{{ field.name }}" required>
-                        <label class="login-field-icon fui-user" for="login-name"></label>
-                    </div>
-                {% endfor %}
-            </div>
+        <div class="login-screen app-title">
+            <h3>{{ fields.username }}'s profile!</h3>
+            <h4>Hello {{ fields.firstname }} {{ fields.lastname }}!</43>
+            <h4>Welcome to magram!</h4>
+            <h5>Your email is {{ fields.email }}</h5>
         </div>
     </div>
 {% endif %}

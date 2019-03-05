@@ -15,7 +15,7 @@ MhS
 
 - [x] front-end for user app
 - [x] back-end for user app
-- [ ] connect to database
-- [ ] prevent from sql injection
-- [ ] front-end for post app
-- [ ] back-end for post app
+- [x] connect to database
+- [x] prevent from sql injection
+- [x] front-end for post app
+- [x] back-end for post app
