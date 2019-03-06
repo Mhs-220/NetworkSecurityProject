@@ -8,6 +8,7 @@
         </div>
     </div>
 {% else %}
+<a href="/post/compose" class="compose-btn">Compose</a>
     <div class="chat">
         {% for post in posts %}
             {% if post.username == session['username'] %}

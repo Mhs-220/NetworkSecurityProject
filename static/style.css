@@ -194,3 +194,35 @@ input:focus {
 .closebtn:hover {
     color: black;
 }
+
+.compose-btn {
+    background-color: #f44c36;
+    border: none;
+    padding: 10px 25px;
+    font-size: 15px;
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+    outline: none;
+    text-decoration: none;
+  }
+  .compose-btn::before, .compose-btn::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    border: 0 solid transparent;
+    transition: all 0.25s;
+  }
+  .compose-btn:before {
+    border-top: 2px solid #f44c36;
+    top: -6px;
+    left: 0px;
+  }
+  .compose-btn:after {
+    border-bottom: 2px solid #f44c36;
+    bottom: -6px;
+    right: 0px;
+  }
+  .compose-btn:hover::after, .compose-btn:hover::before {
+    width: 100%;
+  }
