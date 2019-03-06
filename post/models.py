@@ -16,7 +16,7 @@ def create_new_post(content, username):
 def get_all_posts():
     conn = sqlite3.connect(db_path)
     crsr = conn.cursor()
-    command = 'select content, users.username from posts inner join users on  users.id = posts.user_id;'
+    command = 'select content, users.username from posts inner join users on users.id = posts.user_id order by -posts.id;'
     posts = crsr.execute(command)
     posts = posts.fetchall()
     posts = [{'content':content, 'username': username} for content, username in posts]
