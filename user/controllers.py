@@ -87,6 +87,7 @@ def signout():
 @user.route('/profile', methods = ['GET'])
 def profile():
     username = session.get('username')
+    fields = []
     if username:
         fields = get_user_profile(username)
     return render_template(
