@@ -6,12 +6,12 @@
     outline: none;
 }
 
-textarea { 
+textarea {
     padding: 0.25em;
     width: 100%;
     max-width: 100%;
     border: none;
-    vertical-align:bottom;
+    vertical-align: bottom;
     color: hsl(0, 0%, 50%);
     border-radius: 0.25em;
     outline: none;
@@ -20,6 +20,7 @@ textarea {
     border: 1px solid hsl(0, 0%, 70%);
     border-radius: 0.25em;
     margin: 0.25em 0 1.5em;
+    background-color: white;
 }
 
 body {
@@ -33,7 +34,6 @@ body {
     width: 300px;
 }
 
-
 .login-screen {
     background-color: #FFF;
     padding: 20px;
@@ -42,7 +42,6 @@ body {
     border-width: 0px 0px 4px 0px;
     border-style: solid;
 }
-
 
 .chat {
     margin: 20px auto;
@@ -54,14 +53,13 @@ body {
     align-items: center;
 }
 
-
 .my-post {
     background: #ccc;
-	position: relative;
-	text-align: center;
+    position: relative;
+    text-align: center;
     width: 300px;
     font-size: 13;
-	border-radius: 10px 10px 5px 10px;
+    border-radius: 10px 10px 5px 10px;
     background-color: rgb(230, 230, 230);
     border-color: #f44c36;
     border-width: 0px 4px 0px 0px;
@@ -71,23 +69,23 @@ body {
 }
 
 .my-post:after {
-	content: '';
-	position: absolute;
-	display: block;
-	top: 100%;
-	left: 100%;
-	margin-top: -20px;
-	border-top: 10px solid transparent;
-	border-bottom: 10px solid transparent;
-	border-left: 12px solid #f44c36;
+    content: '';
+    position: absolute;
+    display: block;
+    top: 100%;
+    left: 100%;
+    margin-top: -20px;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 12px solid #f44c36;
 }
 
 .others-post {
     background: #ccc;
-	position: relative;
+    position: relative;
     width: 300px;
     font-size: 13;
-	border-radius: 10px 10px 10px 5px;
+    border-radius: 10px 10px 10px 5px;
     background-color: rgb(230, 230, 230);
     border-color: #f44c36;
     border-width: 0px 0px 0px 4px;
@@ -97,15 +95,15 @@ body {
 }
 
 .others-post:after {
-	content: '';
-	position: absolute;
-	display: block;
-	top: 100%;
-	right: 100%;
-	margin-top: -20px;
-	border-top: 10px solid transparent;
-	border-bottom: 10px solid transparent;
-	border-right: 12px solid #f44c36;
+    content: '';
+    position: absolute;
+    display: block;
+    top: 100%;
+    right: 100%;
+    margin-top: -20px;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 12px solid #f44c36;
 }
 
 .app-title {
@@ -173,7 +171,8 @@ input:focus {
     color: white;
     margin-bottom: 15px;
     opacity: 1;
-    transition: opacity 0.6s; /* 600ms to fade out */
+    transition: opacity 0.6s;
+    /* 600ms to fade out */
 }
 
 /* The close button */
@@ -205,24 +204,30 @@ input:focus {
     position: relative;
     outline: none;
     text-decoration: none;
-  }
-  .compose-btn::before, .compose-btn::after {
+}
+
+.compose-btn::before,
+.compose-btn::after {
     content: '';
     position: absolute;
     width: 20px;
     border: 0 solid transparent;
     transition: all 0.25s;
-  }
-  .compose-btn:before {
+}
+
+.compose-btn:before {
     border-top: 2px solid #f44c36;
     top: -6px;
     left: 0px;
-  }
-  .compose-btn:after {
+}
+
+.compose-btn:after {
     border-bottom: 2px solid #f44c36;
     bottom: -6px;
     right: 0px;
-  }
-  .compose-btn:hover::after, .compose-btn:hover::before {
+}
+
+.compose-btn:hover::after,
+.compose-btn:hover::before {
     width: 100%;
-  }
+}

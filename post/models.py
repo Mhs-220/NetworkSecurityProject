@@ -2,7 +2,7 @@ import sqlite3
 
 from sqlite3 import Error, IntegrityError, OperationalError
 from manager import db_path
- 
+
 
 def create_new_post(content, username):
     conn = sqlite3.connect(db_path)
@@ -16,9 +16,11 @@ def create_new_post(content, username):
 def get_all_posts():
     conn = sqlite3.connect(db_path)
     crsr = conn.cursor()
-    command = 'select content, users.username from posts inner join users on users.id = posts.user_id order by -posts.id;'
+    command = 'select content, users.username, created_date from posts inner join users on users.id = posts.user_id order by -posts.id;'
     posts = crsr.execute(command)
     posts = posts.fetchall()
-    posts = [{'content':content, 'username': username} for content, username in posts]
+    posts = [{'content':content, 'username': username, 'created_date': created_date} for content, username, created_date in posts]
     conn.close()
     return posts
+
+

@@ -1,30 +1,89 @@
-<link rel="stylesheet" href="/static/style.css" type="text/css">
+<link rel="stylesheet" href="/static/timeline.css" type="text/css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+    crossorigin="anonymous">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jodit/3.1.92/jodit.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jodit/3.1.92/jodit.min.js"></script>
 
 {% block body %}
 {% if not session['logged_in'] %}
-    <div class="login">
-        <div class="login-screen app-title">
-            <h3>You should login first!</h3>
+<div class="login">
+    <div class="login-screen app-title">
+        <h3>You should login first!</h3>
+    </div>
+</div>
+{% else %}
+<!-- <a href="/post/compose" class="compose-btn">Compose</a> -->
+<div class="container clearfix">
+    <div class="people-list" id="people-list">
+        <div class="search">
+            <h3>User List</h3>
+        </div>
+        <ul class="list">
+            {% for user in users %}
+            <li class="clearfix">
+                <img src="https://api.adorable.io/avatars/64/{{ user.email }}" alt="avatar" style="border-radius: 50%;"/>
+                <div class="about">
+                    <div class="name">{{ user.fullname }}</div>
+                    <div class="status">
+                        <i class="fa fa-circle idle"></i> WIP :)
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+
+
+        </ul>
+    </div>
+
+    <div class="chat">
+        <div class="chat-header clearfix">
+            <div class="chat-about">
+                <div class="chat-with">Network Security Class</div>
+                <div class="chat-num-messages">Welcome!</div>
+            </div>
+            <i class="fa fa-star"></i>
+        </div>
+        <div class="chat-history">
+            <ul>
+                {% for post in posts %}
+                {% if post.username == session['username'] %}
+                <li class="clearfix">
+                    <div class="message-data align-right">
+                        <span class="message-data-time">{{ post.created_date }}</span> &nbsp; &nbsp;
+                        <span class="message-data-name">{{ post.username }}</span> <i class="fa fa-circle me"></i>
+
+                    </div>
+                    <div class="message other-message float-right">
+                        {{ post.content|safe }}
+                    </div>
+                </li>
+                {% else %}
+                <li>
+                    <div class="message-data">
+                        <span class="message-data-name"><i class="fa fa-circle online"></i> {{ post.username }}</span>
+                        <span class="message-data-time">{{ post.created_date }}</span>
+                    </div>
+                    <div class="message my-message">
+                        {{ post.content|safe }}
+                    </div>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="chat-message clearfix">
+            <form action="/post/compose" method="POST">
+            <textarea name="compose-editor" id="compose-editor" placeholder="What is in your mind?" rows="3"></textarea>
+            <input type="submit" value="Send" class="timeline-compose-button">
+        </form>
+
         </div>
     </div>
-{% else %}
-<a href="/post/compose" class="compose-btn">Compose</a>
-    <div class="chat">
-        {% for post in posts %}
-            {% if post.username == session['username'] %}
-                <div class="my-post app-title">
-                    <h4>{{post.username}}</h4>
-                    <hr>
-                    <h4>{{post.content}}</h4>
-                </div>
-            {% else %}
-                <div class="others-post app-title">
-                    <h4>{{post.username}}</h4>
-                    <hr>
-                    <h4>{{post.content}}</h4>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
+</div>
 {% endif %}
 {% endblock %}
+<script>
+    // Editor Initiator
+    var editor = new Jodit('#compose-editor');
+    editor.value = '';
+</script>

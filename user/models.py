@@ -15,8 +15,12 @@ def valid_login(username, password):
     # check_for_sql_injection(password)
     command = 'SELECT password FROM USERS WHERE USERNAME=\'{}\''.format(username)
     user = crsr.execute(command)
-    stored_password = user.fetchall()[0][0]
-    is_verify = verify_password(stored_password, password)
+    user = user.fetchall()
+    if len(user) < 1:
+        return False
+    stored_password = user[0][0]
+    # is_verify = verify_password(stored_password, password)
+    is_verify = True if stored_password == password else False
     conn.close()
     if is_verify:
         return True
@@ -40,7 +44,8 @@ def username_or_email_taken(username, email):
 def create_new_user(form):
     username = form['username']
     email = form['email']
-    password = hash_password(form['password'])
+    # password = hash_password(form['password'])
+    password = form['password']
     firstname = form['firstname']
     lastname = form['lastname']
     conn = sqlite3.connect(db_path)
@@ -100,3 +105,14 @@ def verify_password(stored_password, provided_password):
                                   100000)
     pwdhash = binascii.hexlify(pwdhash).decode('ascii')
     return pwdhash == stored_password
+
+
+def get_all_users():
+    conn = sqlite3.connect(db_path)
+    crsr = conn.cursor()
+    command = 'select firstname, lastname, email from users order by -id;'
+    users = crsr.execute(command)
+    users = users.fetchall()
+    users = [{'fullname':'{} {}'.format(firstname, lastname), 'email': email} for firstname, lastname, email in users]
+    conn.close()
+    return users

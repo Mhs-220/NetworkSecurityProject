@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="/static/style.css" type="text/css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jodit/3.1.92/jodit.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jodit/3.1.92/jodit.min.js"></script>
 
 {% block body %}
 {% if not session['logged_in'] %}
@@ -22,7 +24,7 @@
                 {% endif %}
                 <div class="login-form">
                     <div class="control-group">
-                        <textarea class="login-field" value="" placeholder="{{ fields[0].placeholder }}" name="{{ fields[0].name }}" required></textarea>
+                        <textarea id="{{ fields[0].name }}" class="login-field" value="" placeholder="{{ fields[0].placeholder }}" name="{{ fields[0].name }}" required></textarea>
                         <label class="login-field-icon fui-user" for="login-name"></label>
                     </div>
                     <input type="submit" value="Compose" class="btn btn-primary btn-large btn-block">
@@ -35,6 +37,10 @@
 {% endif %}
 {% endblock %}
 <script>
+        // Editor Initiator
+        var editor = new Jodit('#{{ fields[0].name }}');
+        editor.value = '<p>what\'s in your mind?</p>';
+
         // Get all elements with class="closebtn"
         var close = document.getElementsByClassName("closebtn");
         var i;
