@@ -5,15 +5,17 @@ import sqlite3
 
 from sqlite3 import Error, IntegrityError, OperationalError
 from manager import db_path
+
+from db.injection import escape_sql_injection
  
 
 def valid_login(username, password):
     conn = sqlite3.connect(db_path)
     crsr = conn.cursor()
     # Hash password
-    # check_for_sql_injection(username)
-    # check_for_sql_injection(password)
-    command = 'SELECT password FROM USERS WHERE USERNAME=\'{}\''.format(username)
+    username = escape_sql_injection(username)
+    password = escape_sql_injection(password)
+    command = "SELECT password FROM USERS WHERE USERNAME='{}'".format(username)
     user = crsr.execute(command)
     user = user.fetchall()
     if len(user) < 1:
@@ -28,11 +30,11 @@ def valid_login(username, password):
 
 
 def username_or_email_taken(username, email):
-    # check_for_sql_injection(username)
-    # check_for_sql_injection(email)
+    username = escape_sql_injection(username)
+    email = escape_sql_injection(email)
     conn = sqlite3.connect(db_path)
     crsr = conn.cursor()
-    command = 'SELECT password FROM USERS WHERE USERNAME=\'{}\' OR EMAIL=\'{}\''.format(username, email)
+    command = "SELECT password FROM USERS WHERE USERNAME='{}' OR EMAIL='{}'".format(username, email)
     user = crsr.execute(command)
     user = user.fetchall()
     conn.close()
@@ -42,15 +44,15 @@ def username_or_email_taken(username, email):
 
 
 def create_new_user(form):
-    username = form['username']
-    email = form['email']
+    username = escape_sql_injection(form['username'])
+    email = escape_sql_injection(form['email'])
     # password = hash_password(form['password'])
-    password = form['password']
-    firstname = form['firstname']
-    lastname = form['lastname']
+    password = escape_sql_injection(form['password'])
+    firstname = escape_sql_injection(form['firstname'])
+    lastname = escape_sql_injection(form['lastname'])
     conn = sqlite3.connect(db_path)
     crsr = conn.cursor()
-    command = 'insert into users (username, password, email, firstname, lastname) values (?,?,?,?,?);'
+    command = "insert into users (username, password, email, firstname, lastname) values (?,?,?,?,?);"
     values = (username, password, email, firstname, lastname)
     try:
         result = crsr.execute(command, values)
@@ -63,9 +65,10 @@ def create_new_user(form):
 
 
 def get_user_profile(username):
+    username = escape_sql_injection(username)
     conn = sqlite3.connect(db_path)
     crsr = conn.cursor()
-    command = f'select * from users where username=\'{username}\';'
+    command = f"select * from users where username='{username}';"
     try:
         result = crsr.execute(command)
         user_info = result.fetchall()[0]
@@ -110,7 +113,7 @@ def verify_password(stored_password, provided_password):
 def get_all_users():
     conn = sqlite3.connect(db_path)
     crsr = conn.cursor()
-    command = 'select firstname, lastname, email from users order by -id;'
+    command = "select firstname, lastname, email from users order by -id;"
     users = crsr.execute(command)
     users = users.fetchall()
     users = [{'fullname':'{} {}'.format(firstname, lastname), 'email': email} for firstname, lastname, email in users]
