@@ -61,6 +61,12 @@ ul, li {
 .people-list .about {
   padding-left: 8px;
 }
+.people-list .about .name {
+  width: 100px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
 .people-list .status {
   color: #92959E;
 }
