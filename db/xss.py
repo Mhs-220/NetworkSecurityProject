@@ -3,6 +3,7 @@ from cgi import escape
 from urllib.parse import urlparse
 from html.entities import entitydefs
 from xml.sax.saxutils import quoteattr
+from bs4 import BeautifulSoup
 
 def xssescape(text):
     # Gets rid of < and > and & and, for good measure, :
@@ -99,6 +100,7 @@ class XssCleaner(HTMLParser):
         for endtag in self.open_tags:
             if endtag not in self.requires_no_close:
                 self.result += "</%s>" % endtag
+        self.result = str(BeautifulSoup(self.result, features="html.parser"))
         return self.result
     def xtags(self):
         # Returns a printable string informing the user which tags are allowed
