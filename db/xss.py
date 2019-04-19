@@ -100,8 +100,6 @@ class XssCleaner(HTMLParser):
         for endtag in self.open_tags:
             if endtag not in self.requires_no_close:
                 self.result += "</%s>" % endtag
-        # self.result = str(BeautifulSoup(self.result, features="html.parser"))
-        self.result = self.result.replace('<!--', '').replace('-->', '')
         return self.result
     def xtags(self):
         # Returns a printable string informing the user which tags are allowed
