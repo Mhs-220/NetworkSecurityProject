@@ -1,6 +1,8 @@
 import os
 import hashlib
 import binascii
+import hmac
+import base64
 import sqlite3
 
 from sqlite3 import Error, IntegrityError, OperationalError
@@ -9,7 +11,7 @@ from manager import db_path
 from db.injection import escape_sql_injection
  
 
-def valid_login(username, password):
+def valid_login(username, password, saved_hmac):
     conn = sqlite3.connect(db_path)
     crsr = conn.cursor()
     # Hash password
@@ -21,8 +23,11 @@ def valid_login(username, password):
     if len(user) < 1:
         return False
     stored_password = user[0][0]
+    stored_password = bytes(stored_password, 'utf-8')
+    secret = bytes(saved_hmac, 'utf-8')
+    signature = hmac.new(secret, stored_password, digestmod=hashlib.sha256).hexdigest()
     # is_verify = verify_password(stored_password, password)
-    is_verify = True if stored_password == password else False
+    is_verify = True if signature == password else False
     conn.close()
     if is_verify:
         return True

@@ -1,3 +1,5 @@
+import uuid
+
 from flask  import Blueprint, render_template, request, session, redirect, url_for
 
 from .models import valid_login, username_or_email_taken, create_new_user, get_user_profile
@@ -62,12 +64,16 @@ def signin(message = None):
             'type': 'password'
         }
     ]
+    if not session.get('hmac'):
+        session['hmac'] = uuid.uuid4().hex
     if request.method == 'POST':
         if valid_login(
                 request.form['username'],
-                request.form['password']
+                request.form['password'],
+                session['hmac']
             ):
             session['logged_in'] = True
+            session['hmac'] = None
             session['username'] = request.form['username']
             return redirect(url_for('post.timeline'), code = 301)
         else:
@@ -75,13 +81,16 @@ def signin(message = None):
     return render_template(
         'signin.html',
         fields = fields,
-        message = message
+        message = message,
+        hmac = session['hmac']
     )
 
 @user.route("/signout", methods = ['GET'])
 def signout():
     if session.get('logged_in'):
         session['logged_in'] = False
+    if session.get('hmac'):
+        session['hmac'] = None
     return signin('Sign Out Succesfully!')
 
 @user.route('/profile', methods = ['GET'])

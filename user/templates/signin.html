@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="/static/style.css" type="text/css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+
 
 {% block body %}
 {% if session['logged_in'] %}
@@ -8,7 +10,7 @@
         </div>
     </div>
 {% else %}
-    <form action="/user/signin" method="POST">
+    <form action="/user/signin" method="POST" id="signin-form">
         <div class="login">
             <div class="login-screen">
                 <div class="app-title">
@@ -27,6 +29,7 @@
                             <label class="login-field-icon fui-user" for="login-name"></label>
                         </div>
                     {% endfor %}
+                    <input type="hidden" class="login-field" value="{{ hmac }}" name="hmac" required>
                     <input type="submit" value="Log in" class="btn btn-primary btn-large btn-block">
                 </div>
             </div>
@@ -35,6 +38,17 @@
 {% endif %}
 {% endblock %}
 <script>
+        form = document.getElementById('signin-form')
+        if (form && form.elements.password) {
+            form.onsubmit = function() {
+                var hash = sha256.hmac.create(form.elements.hmac.value);
+                hash.update(form.elements.password.value);
+                form.elements.password.value = hash.hex();
+                var hmacParent = document.getElementsByClassName('login-form')
+                var hmacElement = document.getElementsByName('hmac')
+                hmacParent[0].removeChild(hmacElement[0])
+            }
+        }
         // Get all elements with class="closebtn"
         var close = document.getElementsByClassName("closebtn");
         var i;
